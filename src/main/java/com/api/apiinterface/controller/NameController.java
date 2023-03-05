@@ -1,12 +1,13 @@
 package com.api.apiinterface.controller;
 
-import com.api.apiinterface.model.User;
-import com.api.apiinterface.utils.SignUtils;
+import com.api.api_client_sdk.model.User;
+import com.api.api_client_sdk.utils.SignUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 /**
  * 名称API
@@ -30,20 +31,20 @@ public class NameController {
 
         String accessKey = new String(request.getHeader("accessKey").getBytes("ISO-8859-1"),StandardCharsets.UTF_8);
         String nonce = request.getHeader("nonce");
-        String body = request.getHeader("body");
+        String body = new String(request.getHeader("body").getBytes("ISO-8859-1"),StandardCharsets.UTF_8);
         String timestamp = request.getHeader("timestamp");
         String sign = request.getHeader("sign");
 
 
         // todo 实际需要去数据库中查是否分配给了用户
-        if (!accessKey.equals("陈")) {
+        if (!accessKey.equals("asd")) {
             throw new RuntimeException("无权限！");
         }
         if (Long.parseLong(nonce) > 1000) {
             throw new RuntimeException("无权限！");
         }
 
-        // todo 查到secretKey
+        // todo 数据库查到secretKey
         String serverSign = SignUtils.genSign(body, "asdasdasd");
 
         if (!serverSign.equals(sign)) {
