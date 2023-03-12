@@ -12,16 +12,17 @@ import java.util.HashMap;
 /**
  * 名称API
  */
-@RestController()
+@RestController
 @RequestMapping("/name")
 public class NameController {
 
-    @GetMapping("/")
-    public String getNameByGet(String name) {
+    @GetMapping("/get")
+    public String getNameByGet(String name, HttpServletRequest request) {
+        System.out.println(request.getHeader("chenx"));
         return "GET YOUR NAME IS " + name;
     }
 
-    @PostMapping("/")
+    @PostMapping("/post")
     public String getNameByPost(@RequestParam String name) {
         return "POST YOUR NAME IS " + name;
     }
